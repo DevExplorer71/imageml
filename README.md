@@ -1,7 +1,14 @@
 # ImageML Project
 
 ## Overview
-This project demonstrates machine learning for cancer detection using image datasets, including HAM10000 (skin cancer) and PatchCamelyon (PCam). Scripts are provided for training and evaluating models using TensorFlow/Keras.
+This project demonstrates machine learning for medical image analysis using:
+- HAM10000 (skin cancer)
+- Chest X-ray (pneumonia detection)
+- MedMNIST (mini medical image datasets)
+
+Scripts are modular and organized for easy training and evaluation using TensorFlow/Keras and PyTorch.
+
+---
 
 ## Setup Instructions
 
@@ -23,51 +30,64 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 4. Download the Data
+---
 
-#### HAM10000 (Skin Cancer MNIST)
-- Go to [HAM10000 Kaggle Dataset](https://www.kaggle.com/datasets/kmader/skin-cancer-mnist-ham10000)
-- Download and extract the following files:
-  - `HAM10000_images_part_1`
-  - `HAM10000_images_part_2`
-  - `HAM10000_metadata.csv`
-- Place them in the following directory:
-  ```
-  /home/james/Desktop/imageml/data/ham1000/
-  ```
-- Your folder structure should look like:
-  ```
-  data/ham1000/HAM10000_images_part_1/
-  data/ham1000/HAM10000_images_part_2/
-  data/ham1000/HAM10000_metadata.csv
-  ```
+## Data Download & Organization
 
-#### PatchCamelyon (PCam)
-- Go to [PCam Dataset](https://github.com/basveeling/pcam) or [Camelyon16 Grand Challenge](https://data.camelyon16.grand-challenge.org/)
-- Download and extract the `.h5` files:
-  - `camelyonpatch_level_2_split_train_x.h5`
-  - `camelyonpatch_level_2_split_train_y.h5`
-- Place them in:
-  ```
-  /home/james/Desktop/imageml/data/pcam/
-  ```
+### HAM10000 (Skin Cancer)
+1. Download from [Kaggle HAM10000](https://www.kaggle.com/datasets/kmader/skin-cancer-mnist-ham10000)
+2. Place files in:
+   ```
+   data/ham/HAM10000_images_part_1/
+   data/ham/HAM10000_images_part_2/
+   data/ham/HAM10000_metadata.csv
+   ```
 
-### 5. Run the Scripts
+### Chest X-ray (Pneumonia)
+1. Download from [Kaggle Chest X-ray Pneumonia](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia)
+2. Place folders in:
+   ```
+   data/chest_xray/train/NORMAL/
+   data/chest_xray/train/PNEUMONIA/
+   data/chest_xray/test/NORMAL/
+   data/chest_xray/test/PNEUMONIA/
+   data/chest_xray/val/NORMAL/
+   data/chest_xray/val/PNEUMONIA/
+   ```
 
-#### Skin Cancer Classification (HAM10000)
+### MedMNIST
+1. No manual download needed. Datasets are downloaded automatically by the scripts.
+
+---
+
+
+## Running the Workflows
+
+### 1. Skin Cancer Classification (HAM10000)
+**Script:** `src/ham/ham10000_skin_cancer_classifier.py`
 ```bash
-python ham10000_skin_cancer_classifier.py
+/home/james/Desktop/clonedprojects/imageml/.venv/bin/python -m src.ham.ham10000_skin_cancer_classifier
 ```
 
-#### PatchCamelyon Cancer Detection
+### 2. Chest X-ray Pneumonia Detection
+**Script:** `src/chest_xray/main.py`
 ```bash
-python pcam_cancer_detection.py
+/home/james/Desktop/clonedprojects/imageml/.venv/bin/python -m src.chest_xray.main
 ```
 
-#### Tabular Example (Breast Cancer)
+### 3. MedMNIST (ChestMNIST Example)
+**Script:** `src/medmnist/chestmnist_example.py`
 ```bash
-python breast_cancer_tabular_example.py
+/home/james/Desktop/clonedprojects/imageml/.venv/bin/python src/medmnist/chestmnist_example.py
 ```
+
+### 4. Breast Cancer Tabular Example
+**Script:** `breast_cancer_tabular_example.py`
+```bash
+/home/james/Desktop/clonedprojects/imageml/.venv/bin/python breast_cancer_tabular_example.py
+```
+
+---
 
 ## Notes
 - Large data files are excluded from the repository (see `.gitignore`).
