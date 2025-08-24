@@ -5,6 +5,7 @@ Assumes images and metadata are in data/ham1000/
 import os
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.models import Sequential
@@ -18,8 +19,8 @@ IMG_DIR_2 = os.path.join(DATA_DIR, 'HAM10000_images_part_2')
 METADATA_PATH = os.path.join(DATA_DIR, 'HAM10000_metadata.csv')
 IMG_SIZE = 64
 BATCH_SIZE = 32
+from src.shared.cnn_model import build_cnn_model
 
-# Load metadata
 df = pd.read_csv(METADATA_PATH)
 img_paths = []
 for img_id in df['image_id']:
@@ -36,6 +37,35 @@ df = df.dropna(subset=['img_path'])
 
 # Use only a subset for quick training (optional)
 df = df.sample(2000, random_state=42)
+
+# --- Data Visualization ---
+# --- Data Visualization ---
+
+# Force TensorFlow to use CPU
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+
+# Show class distribution
+plt.figure(figsize=(8,4))
+df['dx'].value_counts().plot(kind='bar')
+plt.title('HAM10000 Class Distribution')
+plt.xlabel('Class')
+plt.ylabel('Count')
+plt.tight_layout()
+plt.savefig('ham_class_distribution.png')
+plt.close()
+
+# Show sample images
+fig, axes = plt.subplots(2, 5, figsize=(12,5))
+for i, ax in enumerate(axes.flatten()):
+    img_path = df.iloc[i]['img_path']
+    img = image.load_img(img_path, target_size=(IMG_SIZE, IMG_SIZE))
+    ax.imshow(img)
+    ax.set_title(df.iloc[i]['dx'])
+    ax.axis('off')
+plt.suptitle('Sample HAM10000 Images')
+plt.tight_layout()
+plt.savefig('ham_sample_images.png')
+plt.close()
 
 # Image generator
 datagen = ImageDataGenerator(rescale=1./255, validation_split=0.2)

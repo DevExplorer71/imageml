@@ -1,4 +1,9 @@
 numpy
 pandas
 tensorflow
+opencv-python
 scikit-learn
+matplotlib
+torch
+torchvision
+medmnist
